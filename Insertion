@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node 
+{
+    int key;
+    struct Node* left;
+    struct Node* right;
+};
+struct Node* newNode(int item) 
+{
+    struct Node* t = 
+       (struct Node*)malloc(sizeof(struct Node));
+    t->key = item;
+    t->left = t->right = NULL;
+    return t;
+}
+struct Node* insert(struct Node* root, int x)
+{
+    struct Node* t = newNode(x)
+    if (root == NULL)
+        return t;
+
+    struct Node *parent = NULL, *curr = root;
+    while (curr != NULL)
+{
+        parent = curr;
+        if (curr->key > x)
+            curr = curr->left;
+        else if (curr->key < x)
+            curr = curr->right;
+        else
+            return root;
+    }
+    if (parent->key > x)
+        parent->left = t;
+    else
+        parent->right = t;
+    return root;
+}
+void inorder(struct Node* root)
+{
+    if (root != NULL) 
+{
+        inorder(root->left);
+        printf("%d",root->key);
+        inorder(root->right);
+    }
+}
+int main() 
+{
+    struct Node* root = newNode(50);
+    root = insert(root, 15);
+    root = insert(root, 13);
+    root = insert(root, 16);
+    root = insert(root, 17);
+    root = insert(root, 11);
+    root = insert(root, 19);
+    inorder(root);
+
+    return 0;
+}
