@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct TreeNode 
+{
+    int data;
+    struct TreeNode* left;
+    struct TreeNode* right;
+}
+TreeNode;
+TreeNode* createNode(int data) 
+{
+    TreeNode* newNode = (TreeNode*)malloc(sizeof(TreeNode));
+    if (newNode == NULL)
+    {
+        printf("Memory allocation failed\n");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+TreeNode* insertNode(TreeNode* root, int data)
+{
+    if (root == NULL)
+    {
+        return createNode(data);
+    }
+        if (data < root->data)
+    {
+        root->left = insertNode(root->left, data);
+    } 
+        else
+     {
+           root->right = insertNode(root->right, data);
+     }
+    return root;
+}
+void inorderTraversal(TreeNode* root)  
+{
+    if (root != NULL)
+   {
+        inorderTraversal(root->left);
+        printf("%d ", root->data);
+        inorderTraversal(root->right);
+    }
+}
+
+void freeTree(TreeNode* root) 
+{
+    if (root != NULL)
+    {
+        freeTree(root->left);
+        freeTree(root->right);
+        free(root);
+    }
+}
+
+int main()
+{
+    TreeNode* root = NULL;
+    int choice, value;
+
+    while (1)
+{
+        printf("\nBinary Tree Operations Menu:\n");
+        printf("1. Insert a node\n");
+        printf("2. Display tree (Inorder Traversal)\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+      {
+            case 1:
+                printf("Enter the value to insert: ");
+                scanf("%d", &value);
+                root = insertNode(root, value);
+                break;
+
+            case 2:
+                printf("Inorder Traversal of the Binary Tree:\n");
+                inorderTraversal(root);
+                printf("\n");
+                break;
+
+            case 3:
+                freeTree(root);
+                printf("Exiting...\n");
+                return 0;
+
+            default:
+                printf("Invalid choice. Please try again.\n");
+                break;
+        }
+  }
+
+    return 0;
+}
